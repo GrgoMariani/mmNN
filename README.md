@@ -18,7 +18,10 @@ This neural net has 3 inputs and 3 outputs but how many layers??? One might say 
 
 Consider a problem where you need to find out if a given image is that of a circle? Next consider if it is an image of a car? First one might be easily solved in a couple of layers, but the other one needs a lot more abstractions to work properly, so a lot more layers.
 Now consider a problem where you need to find out if there is a car and a circle in an image??? Why would our circle abstraction need to be represented in all the layers after it has been identified???
+
 ![Circle Car](images/CircleAndCar.png?raw=true "Circle and Car")
+
+(A slightly better analogy could have been a red hat.)
 
 #### Neuron and Synapse
 
@@ -39,11 +42,24 @@ You can check out the examples by:
 ```
  g++ -std=c++11 example1.cpp -o example1
  g++ -std=c++11 example2.cpp -o example2
+ g++ -std=c++11 exampleMNIST.cpp -o exampleMNIST
 ```
 ![Example 1](images/Example1.png?raw=true "Example 1")
 
 The first example produces the net with 4 inputs and 1 output, as well as two hidden layers. The network teaches to square the binary number representation of 4 inputs.
 Example2 is similar though it has 4 outputs [binary representation, (A AND B) OR C, number of ones, A-5B+3C-4D]
+
+#### MNIST example
+```
+ g++ -std=c++11 exampleMNIST.cpp -o exampleMNIST
+```
+I recently added a MNIST dataset example. You will need to download the dataset from http://yann.lecun.com/exdb/mnist/ .
+I used C:/MNIST/ dir for uncompressed files. You can change the directory in the exampleMNIST.cpp file.
+The example tries to learn the dataset by using the following "architecture".
+
+![Example MNIST](images/MNIST.png?raw=true "Example MNIST")
+
+Every 1000 iterations it deletes unnecessary synapses. The images used for training are randomly translated (max 5 px) and rotated (max 35°). Initial learning rate is 0.01 and it decreases every 1000 iterations by a factor of 0.9985. Feel free to play around with these parameters.
 
 #### Usage
 Most you need to know should be covered in two examples. mmNN is quite new so ... , keep it simple.
