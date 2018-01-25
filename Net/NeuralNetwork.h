@@ -1,20 +1,4 @@
 #pragma once
-/*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
- * Gnu GPL license
- * This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 #include <vector>
 #include <math.h>
@@ -24,6 +8,7 @@
 #include "Utils/Utils.h"
 #include "ErrorFunction.h"
 
+#include <omp.h>
 namespace mmNN{
 
 const double MIN_WEIGHT=0.001;
@@ -88,7 +73,7 @@ public:
     }
     std::string netInfo(){
         std::ostringstream strs;
-        strs<<"Neurons : "<<_listofneurons.size()<<"    Synapses: "<<_listofsynapses.size()<<std::endl;
+        strs<<"Neurons : "<<_listofneurons.size()<<"    Synapses: "<<_listofsynapses.size();
         return strs.str();
     }
 /**< Max Depths >*/
@@ -123,11 +108,11 @@ private:
 
 /** < FIRST AND LAST LAYER >*/
 public:
-    NeuralNetwork( unsigned int inputLayerSize, unsigned int outputLayerSize){
+    NeuralNetwork( unsigned int inputLayerSize, unsigned int outputLayerSize, unsigned int outputActivationType=AF_LINEAR){
         for( unsigned int i=0 ; i<inputLayerSize; i++ )
             _inputLayer.push_back( newNeuron(AF_LINEAR) );
         for( unsigned int i=0 ; i<outputLayerSize; i++ )
-            _outputLayer.push_back( newNeuron(AF_LINEAR) );
+            _outputLayer.push_back( newNeuron(outputActivationType%AF_MAXSIZE) );
         _bias=newNeuron(AF_SOFTSIGN);
         //CONNECT OUTPUT TO BIAS
         //MAKE MIDDLE LAYER AND CONNECT TO INPUT AND OUTPUT
@@ -146,6 +131,8 @@ public:
             std::cout<<std::endl<<"Input sizes don't match "<<input.size()<<" vs "<<_inputLayer.size()<<std::endl<<std::endl;
             return result;
         }
+        //! OPENMP
+        //#pragma omp parallel for
         for( unsigned int i=0; i<input.size(); i++){
             _inputLayer[i]->ForwardNeuron(input[i]);
         }
@@ -200,6 +187,8 @@ public:
             std::cout<<"Wrong size for backprop : "<<desired.size()<<" vs "<<_outputLayer.size()<<std::endl;
             return;
         }
+        //! OPENMP
+        //#pragma omp parallel for
         for(unsigned int i=0; i<_outputLayer.size(); i++){
             _outputLayer[i]->backpropagateError(error_function->getDerivative(_outputLayer[i]->getLastActivation(), desired[i]), learningrate);
         }

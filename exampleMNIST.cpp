@@ -29,7 +29,7 @@ int main()
     test_images  = read_mnist_images( "C:/MNIST/t10k-images.idx3-ubyte", no_of_test_images, size_of_images );
     test_labels  = read_mnist_labels( "C:/MNIST/t10k-labels.idx1-ubyte", no_of_test_images );
 
-    NeuralNetwork net( size_of_images, 10 );
+    NeuralNetwork net( size_of_images, 10, AF_SOFTSIGN );
     LearningRate lr(0.01);
     ErrorFunction* squaredError= new ErrorFunction(LOSS_SQUARED);
 
@@ -52,7 +52,7 @@ int main()
 
 
 void CreateNet(NeuralNetwork& net){
-    /*!              65-------45-------45-------45   ArcTan Neurons
+    /*!              60-------40-------40-------40   ArcTan Neurons
      *          /       \             /        /
      *        /            \        /        /         \
      *      /                 \   /        /            \
@@ -61,7 +61,7 @@ void CreateNet(NeuralNetwork& net){
      *   Neurons            /        / \                Neurons
      *        \           /        /      \             /
      *          \       /        /           \         /
-     *               35-------20-------20-------20   SoftStep Neurons
+     *               30-------20-------20-------20   TanH Neurons
      */
     vector<Neuron*> input_layer  =  net.getInputLayer();
     vector<Neuron*> output_layer =  net.getOutputLayer();
@@ -73,43 +73,43 @@ void CreateNet(NeuralNetwork& net){
     vector<Neuron*> deep_layer_22;
     vector<Neuron*> deep_layer_32;
     vector<Neuron*> deep_layer_42;
-    for( unsigned int i=0; i<65; i++){
+    for( unsigned int i=0; i<60; i++){
         Neuron* newNeuron = net.newNeuron(AF_ARCTAN);
         deep_layer_11.push_back( newNeuron );
         net.link2bias(newNeuron, random_neg1_to_1() );
     }
-    for( unsigned int i=0; i<45; i++){
+    for( unsigned int i=0; i<40; i++){
         Neuron* newNeuron = net.newNeuron(AF_ARCTAN);
         deep_layer_21.push_back( newNeuron );
         net.link2bias(newNeuron, random_neg1_to_1() );
     }
-    for( unsigned int i=0; i<45; i++){
+    for( unsigned int i=0; i<40; i++){
         Neuron* newNeuron = net.newNeuron(AF_ARCTAN);
         deep_layer_31.push_back( newNeuron );
         net.link2bias(newNeuron, random_neg1_to_1() );
     }
-    for( unsigned int i=0; i<45; i++){
+    for( unsigned int i=0; i<40; i++){
         Neuron* newNeuron = net.newNeuron(AF_ARCTAN);
         deep_layer_41.push_back( newNeuron );
         net.link2bias(newNeuron, random_neg1_to_1() );
     }
-    for( unsigned int i=0; i<35; i++){
-        Neuron* newNeuron = net.newNeuron(AF_SOFTSTEP);
+    for( unsigned int i=0; i<30; i++){
+        Neuron* newNeuron = net.newNeuron(AF_TANH);
         deep_layer_12.push_back( newNeuron );
         net.link2bias(newNeuron, random_neg1_to_1() );
     }
     for( unsigned int i=0; i<20; i++){
-        Neuron* newNeuron = net.newNeuron(AF_SOFTSTEP);
+        Neuron* newNeuron = net.newNeuron(AF_TANH);
         deep_layer_22.push_back( newNeuron );
         net.link2bias(newNeuron, random_neg1_to_1() );
     }
     for( unsigned int i=0; i<20; i++){
-        Neuron* newNeuron = net.newNeuron(AF_SOFTSTEP);
+        Neuron* newNeuron = net.newNeuron(AF_TANH);
         deep_layer_32.push_back( newNeuron );
         net.link2bias(newNeuron, random_neg1_to_1() );
     }
     for( unsigned int i=0; i<20; i++){
-        Neuron* newNeuron = net.newNeuron(AF_SOFTSTEP);
+        Neuron* newNeuron = net.newNeuron(AF_TANH);
         deep_layer_42.push_back( newNeuron );
         net.link2bias(newNeuron, random_neg1_to_1() );
     }
@@ -160,7 +160,7 @@ void TrainNet(NeuralNetwork& net, LearningRate& lr, ErrorFunction* squaredError,
     int j=0;
     while(j<no_of_train_images*no_of_times){
         if(j%1000==0){
-            lr.multiplyLearningRate(0.9985);
+            lr.multiplyLearningRate(0.99);
             net.removeSynapsesWithAbsWeightLessThan(0.0001);
             cout<<"training : "<<j+1<<" started | LR: "<<lr.getCurrentLearningRate()<<" | NET: "<<net.netInfo()<<endl;
         }
