@@ -27,7 +27,7 @@ class ListOfSynapses;
 class Neuron{
     friend class NeuralNetwork;
     friend class Evolution;
-public:
+private:
     Neuron(Activation* activationfunction){
         activation=activationfunction;
         neuron_ID = TOTAL_NEURONS++;

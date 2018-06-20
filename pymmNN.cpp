@@ -90,21 +90,42 @@ public:
         return result;
     }
     
+    void linkToBias(mmNN::Neuron* neuronToLink, double weight){
+        this->_nn->link2bias(neuronToLink, weight);
+    }
+    
+    void linkTwoNeurons(mmNN::Neuron* neuron_before, mmNN::Neuron* neuron_after, double weight){
+        this->_nn->link2Neurons(neuron_before, neuron_after, weight);
+    }
+    
+    mmNN::Neuron* createNeuron(int activation_type, int accumulation_type){
+        return this->_nn->newNeuron(activation_type, accumulation_type);
+    }
+    
+    std::string info(){
+        return this->_nn->netInfo();
+    }
+    
 };
 
+
+
+/*   OUR PYTHON MODULE    */
 BOOST_PYTHON_MODULE(pymmNN)
 {
-    py::class_<mmNN::Activation>("Activation", py::init<int, int>());
-    
-    py::class_<mmNN::Neuron>("Neuron", py::init<mmNN::Activation*>());
+    py::class_<mmNN::Neuron, boost::noncopyable>("Neuron", py::no_init);
     
     py::class_< NN_FACADE >("NeuralNetwork", py::init<int, int, int>())
         .def("forward", &NN_FACADE::forward)
         .def("backprop", &NN_FACADE::backprop)
+        .def("createNeuron", &NN_FACADE::createNeuron, py::return_value_policy<py::manage_new_object>())
         .def("getInputLayer", &NN_FACADE::getInputLayer)
         .def("getOutputLayer", &NN_FACADE::getOutputLayer)
+        .def("linkToBias", &NN_FACADE::linkToBias)
+        .def("linkTwoNeurons", &NN_FACADE::linkTwoNeurons)
         .def("setLearningRate", &NN_FACADE::setLearningRate)
-        .def("setErrorFunction", &NN_FACADE::setErrorFunction);
+        .def("setErrorFunction", &NN_FACADE::setErrorFunction)
+        .def("info", &NN_FACADE::info);
     
     py::class_< mmNN::LearningRate >("LearningRate", py::init<double>())
         .def("get", &mmNN::LearningRate::getCurrentLearningRate)
