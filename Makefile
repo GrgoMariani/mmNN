@@ -6,7 +6,7 @@ BASICOPTS = -shared -Wl,--export-dynamic
 CXXFLAGS = -std=c++11
 
 # Choose version and set python header folder
-PYTHON_VERSION = 3.4m
+PYTHON_VERSION = 2.7
 SHORT = $(subst .,,$(subst m,,$(PYTHON_VERSION)))
 PYTHON_INCLUDE = /usr/include/python$(PYTHON_VERSION)
 
