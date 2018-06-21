@@ -25,17 +25,21 @@ class NN_FACADE{
 private:
     mmNN::NeuralNetwork *_nn;
     mmNN::ErrorFunction *_error;
+    mmNN::LearningRate *_learningrate;
     int input_size;
     int output_size;
-    double _lr;
+    
 public:
     NN_FACADE(int in_size, int out_size, int output_activation){
         this->input_size=in_size;
         this->output_size=out_size;
         this->_nn = new mmNN::NeuralNetwork(in_size, out_size, output_activation);
+        this->_learningrate = new mmNN::LearningRate(1.);
+        this->_error = new mmNN::ErrorFunction(mmNN::LOSS_SQUARED);
     }
     
-    void setErrorFunction(int error_type){
+    void changeErrorFunction(int error_type){
+        delete this->_error;
         this->_error = new mmNN::ErrorFunction(error_type);
     }
     
@@ -65,11 +69,11 @@ public:
         for(int i=0; i<len(desired_data); i++){
             data.push_back( py::extract<double>(desired_data[i]) );
         }
-        this->_nn->backPropagateFor(data, this->_lr, this->_error);
+        this->_nn->backPropagateFor(data, this->_learningrate->getCurrentLearningRate(), this->_error);
     }
     
     void setLearningRate(double lr){
-        this->_lr = lr;
+        this->_learningrate->setCurrentLearningRate(lr);
     }
     
     py::list getInputLayer(){
@@ -124,13 +128,8 @@ BOOST_PYTHON_MODULE(pymmNN)
         .def("linkToBias", &NN_FACADE::linkToBias)
         .def("linkTwoNeurons", &NN_FACADE::linkTwoNeurons)
         .def("setLearningRate", &NN_FACADE::setLearningRate)
-        .def("setErrorFunction", &NN_FACADE::setErrorFunction)
+        .def("changeErrorFunction", &NN_FACADE::changeErrorFunction)
         .def("info", &NN_FACADE::info);
-    
-    py::class_< mmNN::LearningRate >("LearningRate", py::init<double>())
-        .def("get", &mmNN::LearningRate::getCurrentLearningRate)
-        .def("set", &mmNN::LearningRate::setCurrentLearningRate)
-        .def("multiply", &mmNN::LearningRate::multiplyLearningRate);
     
     // ENUMS
     py::enum_<mmNN::ActivationFunctionTypes>("ActivationType")

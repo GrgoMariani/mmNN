@@ -6,9 +6,9 @@
 
 ####  Brief
 
-A simple to use, ___lightweight___ neural network library.
+A simple to use, ___lightweight___ neural network _C++ library/Python module_.
 
-Watch out as this is still in development and written only for C++ (11), so I would advise you away from using it in something "big". Not to mention that this also served as a pet project to confirm some of my intuitions about NNs.
+Watch out as this is still in development and written only for ___C++11___ and ___Python___, so I would advise you away from using it in something "big". Not to mention that this also served as a pet project to confirm some of my intuitions about NNs.
 
 The main motivation behind this project was a deeper evaluation of abstractions in neural nets. While other frameworks might use whole layers as their 'atoms' for building the neural net, mmNN's is the neuron and the synapse.
 
@@ -38,7 +38,7 @@ I've made a ___Makefile___ which should take care of most of the Python installa
 ```
 $ sudo apt-get install libboost-all-dev python-dev python3-dev
 $ git clone http://www.github.com/GrgoMariani/mmNN.git
-# cd mmNN
+$ cd mmNN
 $ make
 $ sudo make install
 ```
@@ -48,21 +48,23 @@ $ python2.7 example.py
 ```
 ![Example 1](Documentation/images/Example1.png?raw=true "Example 1")
 
-The example produces the net with 4 inputs and 1 output, as well as two hidden layers. The network teaches to square the binary number representation of 4 inputs.
+The example produces the net with 4 inputs and 1 output, as well as two hidden layers. The network teaches to convert the binary number representation to decimal of 4 inputs.
+
+Check the example2.py also. It does the same thing in a loop, and the outputs are squares now.
+Be sure to start the example a couple of times and see how it sometimes learns quickly, sometimes slow, and sometimes not at all.
 
 #### Usage
 Most you need to know should be covered in the examples. mmNN is quite new so ... , keep it simple.
+
 After importing the module you should create your net and define number of inputs and outputs.
 ```
-from pymmNN import NeuralNetwork, LearningRate, ActivationType, AccumulationType, ErrorType
+from pymmNN import NeuralNetwork, ActivationType, AccumulationType, ErrorType
 
 net = NeuralNetwork( NUMBER_OF_INPUTS, NUMBER_OF_OUTPUTS, ActivationType.LINEAR)
-lr = LearningRate(0.005)
-net.setLearningRate(lr.get())
-net.setErrorFunction(ErrorType.LOSS_SQUARED)
+net.setLearningRate(0.005)
 ```
 
-To get the first and last layer of neurons:
+To get the first and the last layer of neurons:
 ```
 input_layer =   net.getInputLayer()
 output_layer =  net.getOutputLayer()
@@ -97,6 +99,7 @@ Once all the connections are set feel free to use your network and "teach it" ne
 
 Input _list_ of NOI size and expect _list_ of NOO size as output.
 ```
+# Create some input data
 INPUT_DATA = [1. , 2. , 3.]
 # Forward the data and get OUTPUT_DATA
 OUTPUT_DATA = net.forward(data)
@@ -108,8 +111,11 @@ net.backprop( DESIRED_DATA)
 ```
 
 #### Other
-This short intro explains most of the Python module.
+This short intro explains most of the Python module. The default error function is _loss squared_.
 
 [Check the Python example]( example.py )
 
+[Check the Python example2]( example2.py )
+
 [For C++ code check this link]( Documentation/README.md )
+

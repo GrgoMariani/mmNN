@@ -22,11 +22,11 @@ third_layer = []
 output_layer = net.getOutputLayer()
 
 # let's create our second and third layer
-for _ in range(10):
+for _ in range(20):
     temp_neuron = net.createNeuron(ActivationType.ARCTAN, AccumulationType.NORMAL)
     second_layer.append(temp_neuron)
     net.linkToBias(temp_neuron, getRand())
-for _ in range(10):
+for _ in range(20):
     temp_neuron = net.createNeuron(ActivationType.ARCTAN, AccumulationType.NORMAL)
     third_layer.append(temp_neuron)
     net.linkToBias(temp_neuron, getRand())
@@ -48,19 +48,20 @@ for t_neuron in third_layer:
 for o_neuron in output_layer:
     net.linkToBias(o_neuron, getRand())
 
-# Do our training
-for _ in range(100000):
-    data = [rand01(), rand01(), rand01(), rand01()]
-    net.forward(data)
-    desired = [data[0]*8 + data[1]*4 + data[2]*2 + data[3]]
-    net.backprop(desired)
+while True:
+    # Do our training
+    for _ in range(50000):
+        data = [rand01(), rand01(), rand01(), rand01()]
+        net.forward(data)
+        desired = [(data[0]*8 + data[1]*4 + data[2]*2 + data[3])**2]
+        net.backprop(desired)
 
-# Print everything
-print("INFO: {}".format(net.info()))
-for a in range(2):
-    for b in range(2):
-        for c in range(2):
-            for d in range(2):
-                data = [a, b, c, d]
-                print("{}: {}".format(data, net.forward(data)) )
+    # Print everything
+    print("INFO: {}".format(net.info()))
+    for a in range(2):
+        for b in range(2):
+            for c in range(2):
+                for d in range(2):
+                    data = [a, b, c, d]
+                    print("{}: {}".format(data, net.forward(data)) )
 
