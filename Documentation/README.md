@@ -39,19 +39,18 @@ No installation necessary, simply copy the Net directory and mmNN.h header to yo
 ```
 Also, don't forget to compile with C++-11.
 You can check out the examples by:
+```console
+ make -f makefile_optional
 ```
- g++ -std=c++11 example1.cpp -o example1
- g++ -std=c++11 example2.cpp -o example2
- g++ -std=c++11 exampleMNIST.cpp -o exampleMNIST
-```
+This builds 3 files `build/example1.exe`, `build/example2.exe` and `build/exampleMNIST.exe` .
 ![Example 1](images/Example1.png?raw=true "Example 1")
 
 The first example produces the net with 4 inputs and 1 output, as well as two hidden layers. The network teaches to square the binary number representation of 4 inputs.
 Example2 is similar though it has 4 outputs [binary representation, (A AND B) OR C, number of ones, A-5B+3C-4D]
 
 #### MNIST example
-```
- g++ -std=c++11 exampleMNIST.cpp -o exampleMNIST
+```console
+make -f makefile_optional build/exampleMNIST
 ```
 I recently added a MNIST dataset example. You will need to download the dataset from http://yann.lecun.com/exdb/mnist/ .
 I used C:/MNIST/ dir for uncompressed files. You can change the directory in the exampleMNIST.cpp file.

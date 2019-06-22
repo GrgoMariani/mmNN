@@ -1,6 +1,10 @@
-#pragma once
+#ifndef __MMNN_ARCTAN_H__
+#define __MMNN_ARCTAN_H__
+
+#include "ActivationFunctionBase.h"
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,29 +19,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "ActivationFunctionBase.h"
-#include <math.h>
 
-namespace mmNN{
 
-class ArcTan : public ActivationFunctionBase{
+namespace mmNN {
+
+class ArcTan : public ActivationFunctionBase {
 public:
-    ArcTan(){
-    }
-    ~ArcTan(){
-    }
-    double getActivation(double x){
-        return atan(x);
-    }
-    double getInverse(double x){
-        return tan(x);
-    }
-    double getDerivative(double x){
-        return 1./(pow(tan(x),2.)+1.);
-    }
-    std::string getName(){
-        return "ARCTAN";
-    }
-} af_arctan;
+    ArcTan();
+    ~ArcTan();
+    double getActivation(double x);
+    double getInverse(double x);
+    double getDerivative(double x);
+    std::string getName();
+};
+
+extern ArcTan af_arctan;
 
 }
+
+#endif//__MMNN_ARCTAN_H__

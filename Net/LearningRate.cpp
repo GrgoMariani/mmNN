@@ -1,7 +1,5 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#include <math.h>
+#include "LearningRate.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +20,32 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    LearningRate::LearningRate(double setlearningrate) : _lr(setlearningrate) {
+        _lr=setlearningrate;
+    }
 
-extern Linear af_linear;
+    LearningRate::~LearningRate() {
+
+    }
+
+    double LearningRate::getCurrentLearningRate() {
+        return _lr;
+    }
+
+    double LearningRate::setCurrentLearningRate(double newlearningrate) {
+        _lr=newlearningrate;
+        return _lr;
+    }
+
+    double LearningRate::multiplyLearningRate(double factor) {
+        _lr*=factor;
+        return _lr;
+    }
+
+    double LearningRate::customLearningFunction(double age) {
+        if(age==0. || age==1.)
+            return 0.008;
+        return pow(log(age),2)/age*0.008 ;
+    }
+
 }
-
-#endif//__MMNN_LINEAR_H__

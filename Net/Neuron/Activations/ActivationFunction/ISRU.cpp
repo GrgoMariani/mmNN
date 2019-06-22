@@ -1,7 +1,5 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#include <cmath>
+#include "ISRU.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +20,31 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    ISRU::ISRU() {
 
-extern Linear af_linear;
+    }
+
+    ISRU::~ISRU() {
+
+    }
+
+    double ISRU::getActivation(double x) {
+        return x/(sqrt(1.+pow(x,2)));
+    }
+
+    double ISRU::getInverse(double x) {
+        if( x==1. ) return 100000.;
+        return x/(sqrt(1.-pow(x,2)));
+    }
+
+    double ISRU::getDerivative(double x) {
+        return pow(1./(sqrt(1.+pow(getInverse(x),2))),3);
+    }
+
+    std::string ISRU::getName(){
+        return "ISRU";
+    }
+
+ISRU af_isru;
+
 }
-
-#endif//__MMNN_LINEAR_H__

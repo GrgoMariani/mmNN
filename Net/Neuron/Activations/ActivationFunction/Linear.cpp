@@ -1,7 +1,4 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#include "Linear.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +19,30 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    Linear::Linear() {
 
-extern Linear af_linear;
+    }
+
+    Linear::~Linear() {
+
+    }
+
+    double Linear::getActivation(double x) {
+        return x;
+    }
+
+    double Linear::getInverse(double x) {
+        return x;
+    }
+
+    double Linear::getDerivative(double x) {
+        return 1.;
+    }
+
+    std::string Linear::getName() {
+        return "LINEAR";
+    }
+
+Linear af_linear;
+
 }
-
-#endif//__MMNN_LINEAR_H__

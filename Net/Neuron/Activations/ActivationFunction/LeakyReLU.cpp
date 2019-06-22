@@ -1,7 +1,4 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#include "LeakyReLU.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +19,30 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    LeakyReLU::LeakyReLU() {
 
-extern Linear af_linear;
+    }
+
+    LeakyReLU::~LeakyReLU() {
+
+    }
+
+    double LeakyReLU::getActivation(double x) {
+        return (x>0) ? x:(0.01*x);
+    }
+
+    double LeakyReLU::getInverse(double x) {
+        return (x>0) ? x:(100*x);
+    }
+
+    double LeakyReLU::getDerivative(double x) {
+        return (x>0) ? 1.:0.01;
+    }
+
+    std::string LeakyReLU::getName() {
+        return "LEAKYReLU";
+    }
+
+LeakyReLU af_leakyrelu;
+
 }
-
-#endif//__MMNN_LINEAR_H__

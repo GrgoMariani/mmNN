@@ -1,6 +1,9 @@
-#pragma once
+#ifndef __MMNN_POOLING_H_
+#define __MMNN_POOLING_H_
+
+#include "Accumulation.h"
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,17 +18,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "Accumulation.h"
 
-namespace mmNN{
+namespace mmNN {
 
-class AccPooling : public Accumulation{
+class AccPooling : public Accumulation {
 public:
-    AccPooling(){}
-    ~AccPooling(){}
-    void accumulateActivation(double howMuch, double& accumulated){
-        if( accumulated<howMuch ) accumulated=howMuch;
-    }
-} acc_pooling;
+    AccPooling();
+    ~AccPooling();
+    
+    void accumulateActivation(double howMuch, double& accumulated);
+};
 
+extern AccPooling acc_pooling;
 }
+
+#endif//__MMNN_POOLING_H_

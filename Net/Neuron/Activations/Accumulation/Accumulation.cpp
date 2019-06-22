@@ -1,8 +1,4 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
-
+#include "Accumulation.h"
 /*!
  * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
@@ -20,19 +16,27 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace mmNN {
+namespace mmNN{
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    Accumulation::Accumulation() {
 
-extern Linear af_linear;
+    }
+
+    Accumulation::~Accumulation() {
+
+    }
+
+    void Accumulation::accumulateActivation(double howMuch, double& accumulated) {
+        accumulated+=howMuch;
+    }
+
+    double Accumulation::getAccumulated(double accumulated) {
+        return accumulated;
+    }
+
+    double Accumulation::getDerivative(double input, double weight, double accumulated) { //TRYING SOMETHING NEW, MIGHT NOT WORK
+        return input;
+    }
+
+    Accumulation acc_normal;
 }
-
-#endif//__MMNN_LINEAR_H__

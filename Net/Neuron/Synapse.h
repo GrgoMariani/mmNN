@@ -1,6 +1,10 @@
-#pragma once
+#ifndef __MMNN_SYNAPSE_H__
+#define __MMNN_SYNAPSE_H__
+
+#include <string>
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,49 +19,31 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sstream>
-namespace mmNN{
+namespace mmNN {
 
 class Neuron;
 
-class Synapse{
+class Synapse {
 friend class Neuron;
 public:
-    Synapse(int prevNeuronID, int nextNeuronID, Neuron *prev, Neuron *next, double weight) : _prevID(prevNeuronID), _nextID(nextNeuronID), _prev(prev), _next(next), _weight(weight){
-        //std::cout<<"Synapse created "<<getSynapseString()<<std::endl;
-    }
-    ~Synapse(){
-        //std::cout<<"Synapse "<<getSynapseString()<<" deleted"<<std::endl;
-    }
-    void updateWeight(double weight){
-        _weight=weight;
-    }
-    double getWeight(){
-        return _weight;
-    }
-    int getPreviousNeuronID(){
-        return _prevID;
-    }
-    int getNextNeuronID(){
-        return _nextID;
-    }
-    Neuron* getPreviousNeuron(){
-        return _prev;
-    }
-    Neuron* getNextNeuron(){
-        return _next;
-    }
-    std::string getSynapseString(){
-        std::ostringstream strs;
-        strs << _prevID<<"<- "<<_weight<<" ->"<<_nextID;
-        return strs.str();
-    }
+    Synapse(int prevNeuronID, int nextNeuronID, Neuron *prev, Neuron *next, double weight);
+    ~Synapse();
+    
+    void    updateWeight(double weight);
+    double  getWeight();
+    int     getPreviousNeuronID();
+    int     getNextNeuronID();
+    Neuron* getPreviousNeuron();
+    Neuron* getNextNeuron();
+    std::string getSynapseString();
 private:
     unsigned int _prevID;
     unsigned int _nextID;
     Neuron *_prev;
     Neuron *_next;
-    double _weight=0.;
+    double _weight;
 };
 
 }
+
+#endif//__MMNN_SYNAPSE_H__

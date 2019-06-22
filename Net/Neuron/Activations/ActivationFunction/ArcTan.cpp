@@ -1,7 +1,5 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#include <cmath>
+#include "ArcTan.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +20,30 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    ArcTan::ArcTan() {
 
-extern Linear af_linear;
+    }
+
+    ArcTan::~ArcTan() {
+
+    }
+
+    double ArcTan::getActivation(double x) {
+        return atan(x);
+    }
+
+    double ArcTan::getInverse(double x) {
+        return tan(x);
+    }
+
+    double ArcTan::getDerivative(double x) {
+        return 1./(pow(tan(x),2.)+1.);
+    }
+
+    std::string ArcTan::getName() {
+        return "ARCTAN";
+    }
+
+ArcTan af_arctan;
+
 }
-
-#endif//__MMNN_LINEAR_H__

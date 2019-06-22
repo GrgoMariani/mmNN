@@ -1,6 +1,10 @@
-#pragma once
+#ifndef __MMNN_SOFTSTEP_H__
+#define __MMNN_SOFTSTEP_H__
+
+#include "ActivationFunctionBase.h"
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,29 +19,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "ActivationFunctionBase.h"
-#include <math.h>
-namespace mmNN{
 
-class SoftStep : public ActivationFunctionBase{
+namespace mmNN {
+
+class SoftStep : public ActivationFunctionBase {
 public:
-    SoftStep(){
-    }
-    ~SoftStep(){
-    }
-    double getActivation(double x){
-        return 1./( 1.+pow(EULER_NUMBER,-x) );          //  return 1/(1+e^-x);
-    }
-    double getInverse(double x){
-        if(x<=0) return -1000000;                       //  just in case
-        return -log( 1./x+1 );
-    }
-    double getDerivative(double x){
-        return x*(1-x);
-    }
-    std::string getName(){
-        return "SOFTSTEP";
-    }
-} af_softstep;
+    SoftStep();
+    ~SoftStep();
+    double getActivation(double x);
+    double getInverse(double x);
+    double getDerivative(double x);
+    std::string getName();
+};
+
+extern SoftStep af_softstep;
 
 }
+
+#endif//__MMNN_SOFTSTEP_H__

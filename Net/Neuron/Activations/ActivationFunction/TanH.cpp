@@ -1,7 +1,6 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include "TanH.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +21,32 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    TanH::TanH() {
 
-extern Linear af_linear;
+    }
+
+    TanH::~TanH() {
+
+    }
+
+    double TanH::getActivation(double x) {
+        return 2./( 1.+pow(M_E, -2*x) )-1.;
+    }
+
+    double TanH::getInverse(double x) {
+        if(x>=1.)           x=0.999;
+        else if(x<=-1.)     x=-0.999;
+        return ( log((1.+x)/(1.-x)) )/2.;
+    }
+
+    double TanH::getDerivative(double x) {
+        return 1-x*x;
+    }
+
+    std::string TanH::getName() {
+        return "TanH";
+    }
+
+TanH af_tanh;
+
 }
-
-#endif//__MMNN_LINEAR_H__

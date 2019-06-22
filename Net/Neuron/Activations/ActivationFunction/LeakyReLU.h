@@ -1,6 +1,10 @@
-#pragma once
+#ifndef __MMNN_LEAKY_RELU_H__
+#define __MMNN_LEAKY_RELU_H__
+
+#include "ActivationFunctionBase.h"
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,27 +19,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "ActivationFunctionBase.h"
-namespace mmNN{
 
-class LeakyReLU : public ActivationFunctionBase{
+namespace mmNN {
+
+class LeakyReLU : public ActivationFunctionBase {
 public:
-    LeakyReLU(){
-    }
-    ~LeakyReLU(){
-    }
-    double getActivation(double x){
-        return (x>0) ? x:(0.01*x);
-    }
-    double getInverse(double x){
-        return (x>0) ? x:(100*x);
-    }
-    double getDerivative(double x){
-        return (x>0) ? 1.:0.01;
-    }
-    std::string getName(){
-        return "LEAKYReLU";
-    }
-} af_leakyrelu;
+    LeakyReLU();
+    ~LeakyReLU();
+    double getActivation(double x);
+    double getInverse(double x);
+    double getDerivative(double x);
+    std::string getName();
+};
 
+extern LeakyReLU af_leakyrelu;
 }
+
+#endif//__MMNN_LEAKY_RELU_H__

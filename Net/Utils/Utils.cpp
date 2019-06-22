@@ -1,7 +1,7 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
+#ifndef __MMNN_UTILS_H__
+#define __MMNN_UTILS_H__
 
-#include "ActivationFunctionBase.h"
+#include <math.h>
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -19,20 +19,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    double random_neg1_to_1(){
+        return ((double)rand()/(RAND_MAX)*2.-1.);
+    }
 
-extern Linear af_linear;
+    double random_0_or_1(){
+        return (double)(rand()%2);
+    }
+    double random_neg1_or_1(){
+        return random_0_or_1()*2.-1.;
+    }
+
 }
 
-#endif//__MMNN_LINEAR_H__
+#endif//__MMNN_UTILS_H__

@@ -1,7 +1,4 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#include "Pooling.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +19,17 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    AccPooling::AccPooling() {
 
-extern Linear af_linear;
+    }
+
+    AccPooling::~AccPooling() {
+
+    }
+
+    void AccPooling::accumulateActivation(double howMuch, double& accumulated) {
+        if( accumulated<howMuch ) accumulated=howMuch;
+    }
+
+    AccPooling acc_pooling;
 }
-
-#endif//__MMNN_LINEAR_H__

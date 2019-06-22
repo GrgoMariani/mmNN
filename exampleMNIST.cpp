@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
-#include "includes.h"
+#include <math.h>
+
+#include "mmNN.h"
 #include <stdlib.h>
 #include "MNIST.h"
 

@@ -1,7 +1,6 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include "SoftSign.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +21,30 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    SoftSign::SoftSign() {
 
-extern Linear af_linear;
+    }
+
+    SoftSign::~SoftSign() {
+
+    }
+
+    double SoftSign::getActivation(double x) {
+        return (x)/(1+abs(x));
+    }
+
+    double SoftSign::getInverse(double x) {
+        return tan(x)*2./M_PI; //An incorrect approximation
+    }
+
+    double SoftSign::getDerivative(double x) {
+        return 1./(1+pow(abs(getInverse(x)),2.));
+    }
+
+    std::string SoftSign::getName() {
+        return "SOFTSIGN";
+    }
+
+SoftSign af_softsign;
+
 }
-
-#endif//__MMNN_LINEAR_H__

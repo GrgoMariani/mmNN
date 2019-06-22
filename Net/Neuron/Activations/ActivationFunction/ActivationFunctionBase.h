@@ -1,6 +1,10 @@
-#pragma once
+#ifndef __MMNN_ACTIVATIONFUNCTIONBASE_H__
+#define __MMNN_ACTIVATIONFUNCTIONBASE_H__
+
+#include <string>
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,11 +19,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace mmNN{
+namespace mmNN {
 
-class ActivationFunctionBase{
+class ActivationFunctionBase {
 public:
-    virtual ~ActivationFunctionBase(){}
+    virtual ~ActivationFunctionBase();
     virtual double getActivation (double x) =0;
     virtual double getInverse    (double x) =0;
     virtual double getDerivative (double x) =0;
@@ -27,3 +31,5 @@ public:
 };
 
 }
+
+#endif//__MMNN_ACTIVATIONFUNCTIONBASE_H__

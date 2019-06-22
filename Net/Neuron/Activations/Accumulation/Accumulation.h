@@ -1,6 +1,7 @@
-#pragma once
+#ifndef __MMNN_ACCUMULATION_H__
+#define __MMNN_ACCUMULATION_H__
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,22 +16,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace mmNN{
+namespace mmNN {
 
-class Accumulation{
+class Accumulation {
 public:
-    Accumulation(){}
-    virtual ~Accumulation() {
-    }
-    virtual void accumulateActivation(double howMuch, double& accumulated) {
-        accumulated+=howMuch;
-    }
-    virtual double getAccumulated(double accumulated){
-        return accumulated;
-    }
-    virtual double getDerivative(double input, double weight, double accumulated){ //TRYING SOMETHING NEW, MIGHT NOT WORK
-        return input;
-    }
-} acc_normal;
+    Accumulation();
+    virtual ~Accumulation();
+
+    virtual void    accumulateActivation(double howMuch, double& accumulated);
+    virtual double  getAccumulated(double accumulated);
+    virtual double  getDerivative(double input, double weight, double accumulated);
+
+};
+
+extern Accumulation acc_normal;
 
 }
+
+#endif//__MMNN_ACCUMULATION_H__

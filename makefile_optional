@@ -1,0 +1,23 @@
+%/.: 
+	mkdir -p $(@D)
+
+MMNN_SOURCES = Net/Error/ErrorBase.cpp Net/Error/SquaredError.cpp \
+		Net/Neuron/Activations/Accumulation/Accumulation.cpp Net/Neuron/Activations/Accumulation/AbsPooling.cpp Net/Neuron/Activations/Accumulation/Euclidean.cpp Net/Neuron/Activations/Accumulation/Pooling.cpp \
+		Net/Neuron/Activations/ActivationFunction/ActivationFunctionBase.cpp Net/Neuron/Activations/ActivationFunction/ArcTan.cpp Net/Neuron/Activations/ActivationFunction/Binary.cpp Net/Neuron/Activations/ActivationFunction/ISRU.cpp Net/Neuron/Activations/ActivationFunction/LeakyReLU.cpp \
+		Net/Neuron/Activations/ActivationFunction/Linear.cpp Net/Neuron/Activations/ActivationFunction/ReLU.cpp Net/Neuron/Activations/ActivationFunction/SoftSign.cpp Net/Neuron/Activations/ActivationFunction/SoftStep.cpp Net/Neuron/Activations/ActivationFunction/TanH.cpp \
+		Net/Neuron/Activations/Activation.cpp Net/Neuron/Neuron.cpp Net/Neuron/Synapse.cpp Net/Utils/Utils.cpp Net/ErrorFunction.cpp Net/LearningRate.cpp Net/NeuralNetwork.cpp Net/Evolution.cpp
+
+
+MMNN_OBJS=$(patsubst %.cpp,build/%.o,$(MMNN_SOURCES))
+
+EXAMPLES: build/example1 build/example2 build/exampleMNIST
+
+build/%.o: %.cpp | $(@D)/.
+	@mkdir -p $(@D)
+	g++ -std=c++11 -c -Wall $< -o $@
+
+build/example%: build/example%.o $(MMNN_OBJS) | build/.
+	g++ -std=c++11 -Wall $^ -o $@
+
+clean:
+	rm -r build

@@ -1,6 +1,8 @@
-#pragma once
+#ifndef __MMNN_LEARNING_RATE_H__
+#define __MMNN_LEARNING_RATE_H__
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,35 +17,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <math.h>
 
-namespace mmNN{
+namespace mmNN {
 
-class LearningRate{
+class LearningRate {
 public:
-    LearningRate(double setlearningrate=0.05){
-        _lr=setlearningrate;
-    }
-    ~LearningRate(){
-    }
-    double getCurrentLearningRate(){
-        return _lr;
-    }
-    double setCurrentLearningRate(double newlearningrate){
-        _lr=newlearningrate;
-        return _lr;
-    }
-    double multiplyLearningRate(double factor){
-        _lr*=factor;
-        return _lr;
-    }
-    double customLearningFunction(double age){
-        if(age==0. || age==1.) return 0.008;
-        return pow(log(age),2)/age*0.008 ;
-    }
+    LearningRate(double setlearningrate=0.05);
+    ~LearningRate();
 
+    double getCurrentLearningRate();
+    double setCurrentLearningRate(double newlearningrate);
+    double multiplyLearningRate(double factor);
+    double customLearningFunction(double age);
+    
 private:
-    double _lr=0.05;
+    double _lr;
 };
 
 /** \brief Class to set the learning rate factor
@@ -54,3 +42,5 @@ private:
  */
 
  }
+
+#endif//__MMNN_LEARNING_RATE_H__

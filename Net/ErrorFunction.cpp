@@ -1,7 +1,4 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#include "ErrorFunction.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +19,23 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    ErrorFunction::ErrorFunction(int errortype) {
+        switch(errortype){
+            case LOSS_SQUARED:  error_base = new SquaredError; break;
+            default:            error_base = new SquaredError;
+        }
+    }
 
-extern Linear af_linear;
+    ErrorFunction::~ErrorFunction() {
+        delete error_base;
+    }
+
+    double ErrorFunction::getError(std::vector<double> out, std::vector<double> expected) {
+        return error_base->getError(out, expected);
+    }
+
+    double ErrorFunction::getDerivative(double out, double expected) {
+        return error_base->getDerivative(out, expected);
+    }
+    
 }
-
-#endif//__MMNN_LINEAR_H__

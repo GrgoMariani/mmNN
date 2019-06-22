@@ -1,7 +1,6 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include "SoftStep.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +21,30 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    SoftStep::SoftStep() {
 
-extern Linear af_linear;
+    }
+
+    SoftStep::~SoftStep() {
+
+    }
+
+    double SoftStep::getActivation(double x) {
+        return 1./( 1.+pow(M_E,-x) );          //  return 1/(1+e^-x);
+    }
+
+    double SoftStep::getInverse(double x) {
+        if(x<=0) return -1000000;                       //  just in case
+        return -log( 1./x+1 );
+    }
+
+    double SoftStep::getDerivative(double x) {
+        return x*(1-x);
+    }
+
+    std::string SoftStep::getName() {
+        return "SOFTSTEP";
+    }
+
+SoftStep af_softstep;
 }
-
-#endif//__MMNN_LINEAR_H__

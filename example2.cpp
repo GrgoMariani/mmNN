@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <math.h>
 
 #include "mmNN.h"
 #include <stdlib.h>
@@ -12,10 +13,10 @@ int main()
     //Our net has 4 inputs and 4 outputs
     NeuralNetwork net( 4, 4 );
     LearningRate lr(0.0051);
-    ErrorFunction* squaredError= new ErrorFunction(LOSS_SQUARED);
+    ErrorFunction* squaredError = new ErrorFunction(LOSS_SQUARED);
 
-    vector<Neuron*> input_layer =   net.getInputLayer();
-    vector<Neuron*> output_layer =  net.getOutputLayer();
+    vector<Neuron*> input_layer     = net.getInputLayer();
+    vector<Neuron*> output_layer    = net.getOutputLayer();
     vector<Neuron*> second_layer;
     vector<Neuron*> third_layer;
 

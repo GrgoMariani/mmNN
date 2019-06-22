@@ -1,6 +1,10 @@
-#pragma once
+#ifndef __MMNN_RELU_H__
+#define __MMNN_RELU_H__
+
+#include "ActivationFunctionBase.h"
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,28 +19,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "ActivationFunctionBase.h"
 
-namespace mmNN{
 
-class ReLU : public ActivationFunctionBase{
+namespace mmNN {
+
+class ReLU : public ActivationFunctionBase {
 public:
-    ReLU(){
-    }
-    ~ReLU(){
-    }
-    double getActivation(double x){
-        return (x>0) ? x:0.;
-    }
-    double getInverse(double x){
-        return (x>0) ? x:0.;
-    }
-    double getDerivative(double x){
-        return (x>0) ? 1.:0.;
-    }
-    std::string getName(){
-        return "ReLU";
-    }
-} af_relu;
+    ReLU();
+    ~ReLU();
+    double getActivation(double x);
+    double getInverse(double x);
+    double getDerivative(double x);
+    std::string getName();
+};
+
+extern ReLU af_relu;
 
 }
+
+#endif//__MMNN_RELU_H__

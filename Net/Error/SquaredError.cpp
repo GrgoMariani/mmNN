@@ -1,7 +1,6 @@
-#ifndef __MMNN_LINEAR_H__
-#define __MMNN_LINEAR_H__
-
-#include "ActivationFunctionBase.h"
+#include <math.h>
+#include <iostream>
+#include "SquaredError.h"
 
 /*!
  * Copyright (c) 2018 Grgo Mariani
@@ -22,17 +21,27 @@
 
 namespace mmNN {
 
-class Linear : public ActivationFunctionBase {
-public:
-    Linear();
-    ~Linear();
-    double getActivation(double x);
-    double getInverse(double x);
-    double getDerivative(double x);
-    std::string getName();
-};
+    SquaredError::SquaredError() {
 
-extern Linear af_linear;
+    }
+
+    SquaredError::~SquaredError() {
+
+    }
+    
+    double SquaredError::getError(std::vector<double> out, std::vector<double> expected) {
+        double result = 0.;
+        if( out.size()!=expected.size() || out.size()==0 ){
+            std::cout << std::endl << "Sizes not matching : " << out.size() << " vs " << expected.size() << std::endl;
+            return result;
+        }
+        for( unsigned int i=0; i<out.size(); i++ )
+            result += pow(out[i]-expected[i], 2.)/2.;
+        return result;
+    }
+
+    double SquaredError::getDerivative(double out, double expected) {
+        return out-expected;
+    }
+
 }
-
-#endif//__MMNN_LINEAR_H__

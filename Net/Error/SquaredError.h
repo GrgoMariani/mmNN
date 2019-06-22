@@ -1,6 +1,11 @@
-#pragma once
+#ifndef __MMNN_SQUARED_ERROR_H__
+#define __MMNN_SQUARED_ERROR_H__
+
+#include <vector>
+#include "ErrorBase.h"
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,30 +20,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <math.h>
-#include "ErrorBase.h"
-namespace mmNN{
 
-class SquaredError : public ErrorBase{
+namespace mmNN {
+
+class SquaredError : public ErrorBase {
 public:
-    SquaredError(){
-    }
-    ~SquaredError(){
-    }
-    double getError(std::vector<double> out, std::vector<double> expected){
-        double result=0.;
-        if( out.size()!=expected.size() || out.size()==0 ){
-            std::cout<<std::endl<<"Sizes not matching : "<<out.size()<<" vs "<<expected.size()<<std::endl;
-            return result;
-        }
-        for( unsigned int i=0; i<out.size(); i++ )
-            result+=pow(out[i]-expected[i], 2.)/2.;
-        return result;
-    }
+    SquaredError();
+    ~SquaredError();
 
-    double getDerivative(double out, double expected){
-        return out-expected;
-    }
+    double getError(std::vector<double> out, std::vector<double> expected);
+    double getDerivative(double out, double expected);
 };
 
 }
+
+#endif//__MMNN_SQUARED_ERROR_H__

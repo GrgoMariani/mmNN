@@ -1,6 +1,10 @@
-#pragma once
+#ifndef __MMNN_ERROR_BASE_H__
+#define __MMNN_ERROR_BASE_H__
+
+#include <vector>
+
 /*!
- * Copyright (c) 2018 Grgo Mariani @ Include Ltd.
+ * Copyright (c) 2018 Grgo Mariani
  * Gnu GPL license
  * This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,14 +19,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <vector>
-namespace mmNN{
+namespace mmNN {
 
-class ErrorBase{
+class ErrorBase {
 public:
-    virtual ~ErrorBase(){}
+    virtual ~ErrorBase();
     virtual double getError(std::vector<double> out, std::vector<double> expected)  =0;
     virtual double getDerivative(double out, double expected)                       =0;
 };
 
 }
+
+#endif//__MMNN_ERROR_BASE_H__
